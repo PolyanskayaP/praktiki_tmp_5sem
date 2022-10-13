@@ -12,10 +12,10 @@ while x < xk:
     a = x
     s = a 
     i = 2
-    while a > e:
+    while abs(a) > e:
         a = (x**i)/i
         s = s + a   #сумма
         i = i + 1   #количество
     s = -1 * s
-    print("x=",x," y=",s," колич=",i)
+    print("x=","{:4.3f}".format(x)," y=","{:4.3f}".format(s)," i=",i)
     x = x + dx 
