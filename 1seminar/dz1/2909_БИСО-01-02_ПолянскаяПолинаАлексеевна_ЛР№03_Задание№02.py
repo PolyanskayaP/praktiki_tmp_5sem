@@ -1,6 +1,7 @@
 r = 2
+n = int(input("сколько выстрелов будет? = "))
 
-for i in range(10):
+for i in range(n):
     x = float(input("введите x = "))
     y = float(input("введите y = "))
 
