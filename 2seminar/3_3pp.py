@@ -1,13 +1,15 @@
-#6 вариант 
-
-#x = float(input("введите х = "))
-#y = float(input("введите у = "))
+#6 вариант
+tire = "----------------------"
 dx = float(input("введите шаг dx = "))
-e = float(input("введите точность = "))
+e = 0.0001
+print("точность =",e) 
 
 xn = -1
 xk = 1
 x = xn
+print("      таблица        ")
+print("   x   |   y   |  i  ")
+print(tire)
 while x < xk:
     a = x
     s = a 
@@ -17,5 +19,6 @@ while x < xk:
         s = s + a   #сумма
         i = i + 1   #количество
     s = -1 * s
-    print("x=","{:4.3f}".format(x)," y=","{:4.3f}".format(s)," i=",i)
+    print("{:4.3f}".format(x),"|","{:4.3f}".format(s),"|",i)
+    print(tire) 
     x = x + dx 
