@@ -1,9 +1,14 @@
+x = float(input("Введите x0 = "))
+xk = float(input("Введите xKon = "))
+shag = float(input("Введите шаг = "))
+
 s='-----------------------'
 print('        Таблица')
 print(s)
 print('|   x   |      y      |')
 print(s)
-for x in range(-9,10,2):
+while x<xk:  
+
     if (x >= -9) and (x < -7):
         y = 0
         print('|',"{:5.2f}".format(x),'|', "{:11.4f}".format(y),'|')  
@@ -31,4 +36,5 @@ for x in range(-9,10,2):
         print(s)
     else:
         print('|',"{:5.2f}".format(x),'|', 'не попадает |') 
-print(s)
+        print(s)
+    x = x + shag 
