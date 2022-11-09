@@ -36,7 +36,7 @@ for i in range(n):
         a = float(input("введите значение: "))
         m.append(a) 
     else:
-        a = random.uniform(-100,100)
+        a = random.randint(-2,2)
         m.append(a)
 print(m) 
 fi = -1

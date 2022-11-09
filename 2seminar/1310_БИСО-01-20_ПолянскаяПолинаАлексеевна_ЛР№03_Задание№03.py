@@ -4,8 +4,8 @@ dx = float(input("введите шаг dx = "))
 e = 0.0001
 print("точность =",e) 
 
-xn = -1
-xk = 1
+xn = -0.9
+xk = 0.9
 x = xn
 print("      таблица        ")
 print("   x   |   y   | кол-во")
