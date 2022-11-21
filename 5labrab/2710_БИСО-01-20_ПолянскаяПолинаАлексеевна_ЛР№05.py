@@ -2,7 +2,7 @@
 #размерность с клавиатуры, ввод - случайно или нет 
 #numpy с массивами
 # Aij | Akl  i-1 <= k <= i+1       j-1 <= l <= j+1  
-from random import uniform 
+from random import randint
 
 n = int(input("сколько строк в матрице? "))
 m = int(input("сколько столбцов в матрице? "))
@@ -24,7 +24,7 @@ if f:
 else:
     for i in range(n):
         for j in range(m):
-            A[i][j] = uniform(1,30)
+            A[i][j] = randint(-5,5)
 
 def sglazhivanie(A,S,n,m):
     for i in range(n):
