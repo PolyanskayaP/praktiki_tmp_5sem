@@ -49,13 +49,13 @@ def dop_kor(file_name):
                     osh=0
                 else:
                     print("Некорректные данные ")
-        else: #kor  #обратно не забудь \n и ;
+        else: #kor  #обратно не забудь \n и ;    не изменяет, а прпсто добавляет
             with open(file_name, 'r') as f:
                 butunfile = f.readlines() 
             print(butunfile)  #сделай красивый вывод всего списка
             tov = input("введите название товара, информацию о котором хотите изменить: ")
             izm=ret_info_tov2(file_name, tov)
-            izm_str = (f"{izm[0]};{izm[1]};{izm[2]};{izm[3]}\n")  #если не то ввели?
+            izm_str = (f"{izm[0]};{izm[1]};{izm[2]};{izm[3]}")  #если не то ввели? \n стерла
             print(izm_str)
 
             osh=1
