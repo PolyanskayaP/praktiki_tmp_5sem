@@ -1,6 +1,3 @@
-import os
-import tkinter as tk #ccccccc
-from tkinter import filedialog #ccccccc
 class Tovar:
     def __init__(self, _name, _shop, _price, _kolvo):
         self.name = _name
@@ -26,11 +23,8 @@ class Tovar:
     def setKolvo(self,_kolvo):
         self.kolvo = _kolvo
 
-class Menu: #сохранениеААААААА  #методыпереименоватть #tov-name   
+class Menu:  #постПересохранение  #список файлов        #дробные  #испр_сортир    #butunfile
     def __init__(self):  
-        #root = tk.Tk()
-        #root.withdraw()
-        #print("БАЗА ДАННЫХ МАГАЗИНА")
         self.list = []
         f = True 
         while f:
@@ -41,14 +35,14 @@ class Menu: #сохранениеААААААА  #методыпереимено
                 if m == 1 or m == 2:
                     f = False
             except ValueError:
-                #self.clear()
                 continue
-        if m == 2:
-            #print("Выберите файл в открывшемся диалоговом окне...")
-            #file = filedialog.askopenfile(initialdir =os.getcwd(), title = "Выберите файл", filetypes=(("Text Files", "*.txt"),))
-            
-            #spisok failov!!!!!!!
-            file_name = input("введите название файла: ")
+        if m == 2:                     
+            #spisok
+            import os
+            for root, dirs, files in os.walk("."):  
+                for filename in files:
+                    print(filename)
+            file_name = input("введите название файла: ")  #spisok failov!!!!!!!
             with open(file_name, 'r') as file:
                 if file != None:
                     try:
@@ -62,12 +56,8 @@ class Menu: #сохранениеААААААА  #методыпереимено
                             self.list.append(Tovar(name,shop,price,kolvo))
                     except:
                             print("Ошибка при обработке файла...")
-                            #self.clear()
-                            #self.reset()
                 else:
                     print("Ошибка при открытии файла...")
-                    #self.clear()
-                    #self.reset()
                 return
 
     def save(self):
@@ -82,23 +72,11 @@ class Menu: #сохранениеААААААА  #методыпереимено
             kolvo = i.getKolvo()
             tempString = ','.join([name,shop,price,kolvo])
             listvr.append(tempString)
-        #print("Выберите, как сохранить файл, в открывшемся диалоговом окне...")
-      #  file = filedialog.asksaveasfile(defaultextension='.txt')
         file_name = input("введите название файла: ")
         with open(file_name, 'w') as file:
             string = '\n'.join(listvr)
             file.write(string)
 
-    '''def reset(self):
-        self.__init__()''' 
-
-    '''def clear(self):
-        input("Нажмите ENTER, чтобы продолжить...")
-        if(os.name == 'posix'):
-            os.system('clear')
-        else:
-            os.system('cls')
-    '''
     def navigation(self):        
         print('Информация о товаре - 1')
         print('Добавить товар - 2')
@@ -106,50 +84,36 @@ class Menu: #сохранениеААААААА  #методыпереимено
         print('Вывести товары в отсортированном виде по названию товара - 4')
         print('Вывести товары в отсортированном виде по названию магазина - 5')
         print('Сохранить файл как - 6')
-        #print('Закрыть файл - 9')
-        #print('Выйти из программы - 0')
         m = int(input('Введите номер пункта:  ')) 
-        #if choice == 0:
-        #    flag = False
         if (m > 0 and m < 7):
             if m == 1:
                 try:
                     self.info_tov(tov=input("Введите название товара: ")) 
                 except:
                     print("Такого товара нет ")
-                #self.clear()
             if m == 2:
-                self.add()
-                #self.clear()
+                self.dobavit()
             if m == 3:
-                self.edit()
-                #self.clear()
+                self.izmenit()
             if m == 4:
                 self.sortirovka_tov()
-                #self.clear()
             if m == 5:
                 self.sortirovka_magaz()
-                #self.clear()
             if m == 6:
                 self.save()
-                #self.clear()
         else:
             print("неверный номер")
             return 
-        #if choice == 9:
-        #    self.clear()
-        #    self.reset()
 
     def info_tov(self,**kwargs): 
         if not len(self.list):
             print("Товаров в данном файле нет")
             return
-        if 'tow' in kwargs.keys():
+        if 'tov' in kwargs.keys():
             f = 0
             prod_List = []
             for kortej in self.list:
-                if kortej.getName() == kwargs['name']:
-                    #print("Товар: ",len(prod_List)+1,":")
+                if kortej.getName() == kwargs['tov']:
                     print("Название товара - ", kortej.getName())
                     print("Магазин - ", kortej.getShop())
                     print("Цена - ", kortej.getPrice())
@@ -169,7 +133,7 @@ class Menu: #сохранениеААААААА  #методыпереимено
                 print()
             return
 
-    def add(self,**kwargs):
+    def dobavit(self):
         name = input("Введите название товара: ")
         shop = input("Введите название магазина: ")        
         while True:
@@ -192,13 +156,13 @@ class Menu: #сохранениеААААААА  #методыпереимено
                     else:
                         print("Неверная единица измерения ")
             except ValueError:
-                print("Значение количества должно быть числовым")
+                print("Значение количества должно быть числовым")  #а ДРОБНЫЕ?
             kolvo = str(kolvoVal) + ' ' + zn
             break
         self.list.append(Tovar(name, shop, price, kolvo))
         self.save()
 
-    def edit(self):
+    def izmenit(self):
         name = input("Название товара: ")
         if name == '': 
             print("Вы ничего не ввели")
@@ -206,18 +170,17 @@ class Menu: #сохранениеААААААА  #методыпереимено
         tov_List = self.info_tov(tov=name)
         if tov_List == None:
             return
-        choice = 0
+        m = 0
         if len(tov_List) > 1:
             while True:
                 try:
-                    choice = int(input("Введите номер товара:"))
+                    m = int(input("Введите номер товара:"))
                     break
                 except ValueError:
                     continue
-        #self.clear()
         try:
-            print() #"Выбранный товар:"
-            vybtov = tov_List[choice-1]
+            print() 
+            vybtov = tov_List[m-1]
             print("Название: ", vybtov.getName())
             print("Магазин: ", vybtov.getShop())
             print("Цена: ", vybtov.getPrice())
@@ -225,29 +188,25 @@ class Menu: #сохранениеААААААА  #методыпереимено
             print()
         except:
             print("Вы неправильно ввели данные ")
-            #self.clear()
-            self.edit()
+            self.izmenit()
         print('Изменить название товара - 1')
         print('Изменить название магазина - 2')
         print('Изменить цену товара - 3')
         print('Изменить количество товара - 4')
-        #print('Отмена - 0')
         while True:
             try:
-                choice = int(input('Введите номер варианта: '))
-                if choice in [1,2,3,4,0]:
+                m = int(input('Введите номер варианта: '))
+                if m in [1,2,3,4]:
                     break
             except ValueError:
                 continue
-        #if choice == 0:
-         #   return 
-        if choice == 1:
+        if m == 1:
             name = input("Название товара: ")
             vybtov.setName(name)
-        if choice == 2:
+        if m == 2:
             shop = input("Название магазина: ")
             vybtov.setShop(shop)
-        if choice == 3:
+        if m == 3:
             while True:
                 price = input("Цена в т.р.: ")
                 try:
@@ -257,7 +216,7 @@ class Menu: #сохранениеААААААА  #методыпереимено
                 except ValueError:
                     print("Значение цены должно быть числовым")
             vybtov.setPrice(price)
-        if choice == 4:
+        if m == 4:
             while True:
                 kolvo = input("Количество: ")
                 try:
@@ -278,14 +237,12 @@ class Menu: #сохранениеААААААА  #методыпереимено
 
     def sortirovka_magaz(self):
         self.list = sorted(self.list,key=lambda x:x.getShop())
-        self.info_tov()
+        self.info_tov()  
     
     def sortirovka_tov(self):
         self.list = sorted(self.list,key=lambda x:x.getName())
-        self.info_tov()
+        self.info_tov()  
     
-    
-
 if __name__=="__main__":
-    root = Menu()
-    root.navigation()   
+    A = Menu()
+    A.navigation()   
