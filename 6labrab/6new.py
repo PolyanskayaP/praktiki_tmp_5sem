@@ -23,7 +23,7 @@ class Tovar:
     def setKolvo(self,_kolvo):
         self.kolvo = _kolvo
 
-class Menu:  #постПересохранение    #дробные  #испр_сортир    #butunfile
+class Menu:  #дробные  #испр_сортир    #butunfile
     def __init__(self):  
         self.list = []
         f = True 
@@ -72,7 +72,14 @@ class Menu:  #постПересохранение    #дробные  #испр
             kolvo = i.getKolvo()
             tempString = ','.join([name,shop,price,kolvo])
             listvr.append(tempString)
-        file_name = input("введите название файла: ")
+        print()
+        import os
+        for root, dirs, files in os.walk("."):  
+            for fnm in files:
+                if fnm.endswith(".txt"):
+                    print(fnm)
+        print()
+        file_name = input("введите название файла (сохранить как, можете ввести новое): ")
         with open(file_name, 'w') as file:
             string = '\n'.join(listvr)
             file.write(string)
@@ -137,17 +144,17 @@ class Menu:  #постПересохранение    #дробные  #испр
         name = input("Введите название товара: ")
         shop = input("Введите название магазина: ")        
         while True:
-            price = input("Цена в т.р.: ")
+            price = input("Цена: ")
             try:
-                priceval = int(price)
-                price = str(priceval) + ' т.р.' 
+                priceval = float(price)
+                price = str(priceval)
                 break
             except ValueError:
                 print("Значение цены должно быть числовым")
         while True:
             kolvo = input("Количество: ")
             try:
-                kolvoVal = int(kolvo)
+                kolvoVal = int(kolvo)  #int vas here 
                 while True:
                     zn = input("Укажите количество (шт., г., кг., м., л.):")
                     setzn = {'кг.', 'м.', 'г.', 'л.', 'шт.'}
@@ -163,6 +170,7 @@ class Menu:  #постПересохранение    #дробные  #испр
         self.save()
 
     def izmenit(self):
+        self.info_tov()
         name = input("Название товара: ")
         if name == '': 
             print("Вы ничего не ввели")
@@ -208,10 +216,10 @@ class Menu:  #постПересохранение    #дробные  #испр
             vybtov.setShop(shop)
         if m == 3:
             while True:
-                price = input("Цена в т.р.: ")
+                price = input("Цена: ")
                 try:
                     priceval = int(price)
-                    price = str(priceval) + ' т.р.' 
+                    price = str(priceval)
                     break
                 except ValueError:
                     print("Значение цены должно быть числовым")
