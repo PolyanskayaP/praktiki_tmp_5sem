@@ -23,7 +23,7 @@ class Tovar:
     def setKolvo(self,_kolvo):
         self.kolvo = _kolvo
 
-class Menu:  #постПересохранение  #список файлов        #дробные  #испр_сортир    #butunfile
+class Menu:  #постПересохранение    #дробные  #испр_сортир    #butunfile
     def __init__(self):  
         self.list = []
         f = True 
@@ -37,12 +37,12 @@ class Menu:  #постПересохранение  #список файлов  
             except ValueError:
                 continue
         if m == 2:                     
-            #spisok
             import os
             for root, dirs, files in os.walk("."):  
-                for filename in files:
-                    print(filename)
-            file_name = input("введите название файла: ")  #spisok failov!!!!!!!
+                for fnm in files:
+                    if fnm.endswith(".txt"):
+                        print(fnm)
+            file_name = input("введите название файла: ") 
             with open(file_name, 'r') as file:
                 if file != None:
                     try:
