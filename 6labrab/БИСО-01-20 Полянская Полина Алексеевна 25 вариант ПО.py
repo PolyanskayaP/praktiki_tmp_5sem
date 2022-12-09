@@ -4,6 +4,7 @@ class Tovar:
         self.shop = _shop
         self.price = _price
         self.kolvo = _kolvo 
+        self.oshib = 0
 
     def getName(self):
         return self.name
@@ -23,8 +24,9 @@ class Tovar:
     def setKolvo(self,_kolvo):
         self.kolvo = _kolvo
 
-class Menu:  #дробные  #испр_сортир    #butunfile
-    def __init__(self):  
+class Menu:  
+    def __init__(self): 
+        self.oshib = 0 
         self.list = []
         f = True 
         while f:
@@ -43,22 +45,27 @@ class Menu:  #дробные  #испр_сортир    #butunfile
                     if fnm.endswith(".txt"):
                         print(fnm)
             file_name = input("введите название файла: ") 
-            with open(file_name, 'r') as file:
-                if file != None:
-                    try:
-                        arr = file.read().split('\n')
-                        for i in arr:
-                            temp = i.split(',')
-                            name = temp[0]
-                            shop = temp[1]
-                            price = temp[2]
-                            kolvo = temp[3]
-                            self.list.append(Tovar(name,shop,price,kolvo))
-                    except:
-                            print("Ошибка при обработке файла...")
-                else:
-                    print("Ошибка при открытии файла...")
-                return
+            try:
+                with open(file_name, 'r') as file:
+                    if file != None:
+                        try:
+                            arr = file.read().split('\n')
+                            for i in arr:
+                                temp = i.split(',')
+                                name = temp[0]
+                                shop = temp[1]
+                                price = temp[2]
+                                kolvo = temp[3]
+                                self.list.append(Tovar(name,shop,price,kolvo))
+                        except:
+                                print("Найдена ошибка при обработке файла")
+                    else:
+                        print("Найдена ошибка при открытии файла")
+                    return
+            except:
+                print("Найдена ошибка при открытии файла")
+                self.oshib = 1
+                return 
 
     def save(self):
         if not len(self.list):
@@ -84,7 +91,9 @@ class Menu:  #дробные  #испр_сортир    #butunfile
             string = '\n'.join(listvr)
             file.write(string)
 
-    def navigation(self):        
+    def navigation(self):   
+        if self.oshib:
+            return      
         print('Информация о товаре - 1')
         print('Добавить товар - 2')
         print('Изменить информацию о товаре - 3')
@@ -95,6 +104,7 @@ class Menu:  #дробные  #испр_сортир    #butunfile
         if (m > 0 and m < 7):
             if m == 1:
                 try:
+                    self.info_tov()
                     self.info_tov(tov=input("Введите название товара: ")) 
                 except:
                     print("Такого товара нет ")
@@ -146,7 +156,7 @@ class Menu:  #дробные  #испр_сортир    #butunfile
         while True:
             price = input("Цена: ")
             try:
-                priceval = float(price)
+                priceval = int(price)
                 price = str(priceval)
                 break
             except ValueError:
@@ -154,7 +164,7 @@ class Menu:  #дробные  #испр_сортир    #butunfile
         while True:
             kolvo = input("Количество: ")
             try:
-                kolvoVal = int(kolvo)  #int vas here 
+                kolvoVal = int(kolvo)  
                 while True:
                     zn = input("Укажите количество (шт., г., кг., м., л.):")
                     setzn = {'кг.', 'м.', 'г.', 'л.', 'шт.'}
@@ -163,7 +173,7 @@ class Menu:  #дробные  #испр_сортир    #butunfile
                     else:
                         print("Неверная единица измерения ")
             except ValueError:
-                print("Значение количества должно быть числовым")  #а ДРОБНЫЕ?
+                print("Значение количества должно быть числовым") 
             kolvo = str(kolvoVal) + ' ' + zn
             break
         self.list.append(Tovar(name, shop, price, kolvo))
