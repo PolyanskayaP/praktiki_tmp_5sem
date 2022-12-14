@@ -60,7 +60,20 @@ class Menu:
                 C = self.AA[indM1].poel_concat(self.AA[indM2])
                 self.AA.append(C) 
             elif self.__vibor == 4:
-                pass
+                indM1 = int(input("введите индекс одного МАССИВА "))
+                if indM1 > len(self.AA):
+                    print("неверный индекс массива")
+                    break 
+                indM1 = indM1 - 1
+
+                indM2 = int(input("введите индекс другого МАССИВА "))
+                if indM2 > len(self.AA):
+                    print("неверный индекс массива")
+                    break 
+                indM2 = indM2 - 1
+
+                C = self.AA[indM1].sliyan(self.AA[indM2])
+                self.AA.append(C) 
             elif self.__vibor == 5:
                 indM = int(input("введите индекс МАССИВА "))
                 #indM = indM - 1
@@ -146,7 +159,25 @@ class Yozh:
         return C 
 
     def sliyan(self, B: 'Yozh'):
-        pass 
+        lenA = self.__length 
+        lenB = B.__length
+        setA = set()
+        setB = set()
+        for i in range(lenA):
+            q = self.__getitem__(i) 
+            setA.add(q)
+        for i in range(lenB):
+            q =  B.__getitem__(i) 
+            setB.add(q) 
+        setC = setA | setB 
+        n = len(setC)
+        C = Yozh(n)
+        i = 0
+        for q in setC:
+            C.__setitem__(i, q)
+            i = i + 1
+        return C 
+
 
     def add(self, par):
         print(self.__yozhiki)
