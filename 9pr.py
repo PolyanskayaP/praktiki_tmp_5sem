@@ -3,7 +3,7 @@
 #строка [i]    +
 #вы вышли за предел массива!    +
 #a[i]+b[i]; a[j]+b[j]; =c   +
-#a || b   
+#a || b   +
 #print(a[i])  print(a)    +
 
 class Menu:
@@ -38,7 +38,7 @@ class Menu:
                 indM = int(input("введите индекс МАССИВА "))
                 if indM > len(self.AA):
                     print("неверный индекс массива")
-                    break 
+                    continue 
                 indM = indM - 1
                 ind = int(input("введите индекс элемента"))
                 ind = ind - 1
@@ -48,13 +48,13 @@ class Menu:
                 indM1 = int(input("введите индекс одного МАССИВА "))
                 if indM1 > len(self.AA):
                     print("неверный индекс массива")
-                    break 
+                    continue
                 indM1 = indM1 - 1
 
                 indM2 = int(input("введите индекс другого МАССИВА "))
                 if indM2 > len(self.AA):
                     print("неверный индекс массива")
-                    break 
+                    continue 
                 indM2 = indM2 - 1
 
                 C = self.AA[indM1].poel_concat(self.AA[indM2])
@@ -63,13 +63,13 @@ class Menu:
                 indM1 = int(input("введите индекс одного МАССИВА "))
                 if indM1 > len(self.AA):
                     print("неверный индекс массива")
-                    break 
+                    continue 
                 indM1 = indM1 - 1
 
                 indM2 = int(input("введите индекс другого МАССИВА "))
                 if indM2 > len(self.AA):
                     print("неверный индекс массива")
-                    break 
+                    continue
                 indM2 = indM2 - 1
 
                 C = self.AA[indM1].sliyan(self.AA[indM2])
@@ -187,11 +187,6 @@ class Yozh:
         else:
             print(f"{par} не был записан - превышена длина.")
 
-'''
-arr = Yozh(3)
-arr[0] = 'POSIES!'
-# arr[3] = 'POSIES!3'
-print(arr[0])
-'''
+
 me = Menu()
 
