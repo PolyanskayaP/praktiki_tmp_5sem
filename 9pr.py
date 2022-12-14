@@ -2,20 +2,21 @@
 #одномерный массив строк фиксированной длины - объект Yozh   +
 #строка [i]    +
 #вы вышли за предел массива!    +
-#a[i]+b[i]; a[j]+b[j]; =c 
-#a || b
+#a[i]+b[i]; a[j]+b[j]; =c   +
+#a || b   
 #print(a[i])  print(a)    +
 
 class Menu:
     def __init__(self):
-        self.__vibor = 0 
+        self.__vibor = 0
+        self.AA = [] 
         while True:
             print("задать массив строк - 1")
             print("изменить массив - 2") 
             print("поэлементная конкатенация массивов - 3") 
             print("слияние массивов - 4") 
             print("вывести элемент массива на печать - 5") 
-            print("вывести массив на печать - 6") 
+            print("вывести массивы на печать - 6") 
             print("выйти из программы - 0") 
             self.__vibor = int(input(">> "))
             if self.__vibor == 0:
@@ -32,22 +33,48 @@ class Menu:
                     else:
                         self.A.__setitem__(i, q) 
                         i=i+1
-                pass
+                self.AA.append(self.A) 
             elif self.__vibor == 2:
-                ind = int(input("введите индекс "))
+                indM = int(input("введите индекс МАССИВА "))
+                if indM > len(self.AA):
+                    print("неверный индекс массива")
+                    break 
+                indM = indM - 1
+                ind = int(input("введите индекс элемента"))
                 ind = ind - 1
                 zna = input("введите строку ")
-                self.A.__setitem__(ind, zna) 
+                self.AA[indM].__setitem__(ind, zna) 
             elif self.__vibor == 3:
-                pass
+                indM1 = int(input("введите индекс одного МАССИВА "))
+                if indM1 > len(self.AA):
+                    print("неверный индекс массива")
+                    break 
+                indM1 = indM1 - 1
+
+                indM2 = int(input("введите индекс другого МАССИВА "))
+                if indM2 > len(self.AA):
+                    print("неверный индекс массива")
+                    break 
+                indM2 = indM2 - 1
+
+                C = self.AA[indM1].poel_concat(self.AA[indM2])
+                self.AA.append(C) 
             elif self.__vibor == 4:
                 pass
             elif self.__vibor == 5:
-                ind = int(input("введите индекс "))
+                indM = int(input("введите индекс МАССИВА "))
+                #indM = indM - 1
+                ind = int(input("введите индекс элемента"))
                 ind = ind - 1
-                self.A.print(ind) 
+                #print(len(self.AA))
+                if indM <= len(self.AA):
+                    indM = indM - 1
+                    self.AA[indM].print(ind) 
+                else:
+                    print("неверный индекс массива")
             elif self.__vibor == 6:
-                self.A.print_array()
+                for B in self.AA:
+                    B.print_array()
             else:
                 print("вы не то ввели")
             print()
@@ -96,7 +123,7 @@ class Yozh:
         else:
             return 1
     
-    def print(self, index: int):
+    def print(self, index: int):      #печать переделать 
         """печать (вывод на экран) элементов массива"""
         #print(self[index])
         print(self.__getitem__(index))
@@ -107,6 +134,19 @@ class Yozh:
  
     def __str__(self):
         return ' '.join(self.__yozhiki)
+
+    def poel_concat(self, B: 'Yozh'):
+        lenA = self.__length 
+        lenB = B.__length
+        n = min(lenA, lenB)
+        C = Yozh(n)
+        for i in range(n):
+            stro = self.__getitem__(i) + B.__getitem__(i)
+            C.__setitem__(i, stro)
+        return C 
+
+    def sliyan(self, B: 'Yozh'):
+        pass 
 
     def add(self, par):
         print(self.__yozhiki)
